@@ -1,4 +1,5 @@
 import type React from "react"
+import { useRegisterViewModel } from "../viewmodels/use-register"
 
 interface RegisterPageProps {
     onNavigateToLogin: () => void
@@ -7,6 +8,15 @@ interface RegisterPageProps {
 export const RegisterPage: React.FC<RegisterPageProps> = ({
     onNavigateToLogin
 }) => {
+    const {
+        form,
+        confirmPassword,
+        setConfirmPassword,
+        isLoading,
+        error,
+        handleChange,
+        submit
+    } = useRegisterViewModel ()
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden font-sans">
             <header className="relative w-full border border-slate-100 bg-white/80">
@@ -35,20 +45,35 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                             <h1 className="text-3xl font-black">Crear una cuenta</h1>
                             <p className="mt-2.5 text-sm font-medium">Crea tu cuenta y disfruta de tus promociones</p>
                         </div>
-                        <form action="">
+                        <form onSubmit={submit}>
                             <label
                                 className="block text-xs font-semibold uppercase mt-4 mb-2"
                             >Nombre completo
                             </label>
                             <input type="text"
+                                value={form.name}
+                                onChange={(e) => handleChange("name", e.target.value)}
                                 className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                 placeholder="Registra tu nombre"
+                            />
+                            <label
+                                className="block text-xs font-semibold uppercase mt-4 mb-2"
+                            >Apellido
+                            </label>
+                            <input type="text"
+                                value={form.lastname}
+                                onChange={(e) => handleChange("lastname", e.target.value)}
+                                placeholder="Registra tu apellido"
+                                className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
+
                             />
                             <label
                                 className="block text-xs font-semibold uppercase mb-2"
                             >Correo electronico
                             </label>
                             <input type="text"
+                                value={form.email}
+                                onChange={(e) => handleChange("email", e.target.value)}
                                 className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                 placeholder="example@gmail.com"
                             />
@@ -57,6 +82,8 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                             >Telefono
                             </label>
                             <input type="text"
+                                value={form.phone}
+                                onChange={(e) => handleChange("phone", e.target.value)}
                                 className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                 placeholder="7277-2827"
                             />
@@ -64,16 +91,35 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                                 <label
                                     className="block text-xs font-semibold uppercase mb-2"
                                 >Contraseña
-                                </label>                                                        <input type="password"
+                                </label>
+                                <input type="password"
+                                    value={form.password}
+                                    onChange={(e) => handleChange("password", e.target.value)}
                                     className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                     placeholder="Digite su contraseña"
                                 />
                             </div>
+                            <div>
+                                <label
+                                    className="block text-xs font-semibold uppercase mb-2"
+                                >Contraseña
+                                </label>
+                                <input type="password"
+                                    value={confirmPassword}
+                                    onChange={(e) => setConfirmPassword( e.target.value)}
+                                    className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
+                                    placeholder="Digite su contraseña de confirmación"
+                                />
+                            </div>
                             <div className="mt-4">
                                 <button
+                                type="submit"
                                     className="w-full py-3 px-4 bg-blue-600 rounded-lg text-white hover:bg-blue-800 hover:shadow-lg transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
-                                >Crear cuenta
+                                >{isLoading ? "Creando cuenta" : "Crear cuenta"}
                                 </button>
+                                {error &&(
+                                    <p className="text-sm text-red-500 font-medium">{error}</p>
+                                )}
                             </div>
                         </form>
                     </div>

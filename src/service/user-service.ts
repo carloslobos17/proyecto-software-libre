@@ -2,10 +2,10 @@ import type { LoginPayload, LoginResponse } from "../models/user";
 
 const API_BASE_URL = "https://api-ecommerce-5aby.onrender.com"
 
-export async function loginUser(payload: LoginPayload): Promise<LoginResponse> {
+export async function loginUser(payload:LoginPayload): Promise<LoginResponse> {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
-        headers: { "Content-Type": "aplication/json" },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
     })
 
