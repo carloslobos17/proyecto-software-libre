@@ -52,6 +52,14 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                                 className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                 placeholder="example@gmail.com"
                             />
+                            <label
+                                className="block text-xs font-semibold uppercase mb-2"
+                            >Telefono
+                            </label>
+                            <input type="text"
+                                className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
+                                placeholder="7277-2827"
+                            />
                             <div>
                                 <label
                                     className="block text-xs font-semibold uppercase mb-2"
@@ -59,19 +67,6 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                                 </label>                                                        <input type="password"
                                     className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                     placeholder="Digite su contraseña"
-                                />
-                            </div>
-                            <div>
-                                <label
-                                    htmlFor=""
-                                    className="block text-xs font-semibold uppercase mt-4 mb-2"
-                                    >Dirección de envio principal
-                                </label>
-                                <input 
-                                type="text"
-                                className="w-full py-3 px-4 mb-2 border border-slate-200 rounded-lg text-white focus:border-indigo-500 placeholder-slate-400"
-                                placeholder="Municipio, Distrito, Colonia"
-                                required
                                 />
                             </div>
                             <div className="mt-4">
