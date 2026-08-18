@@ -8,10 +8,10 @@ export async function registerUser(payload: RegisterPayload) {
         body: JSON.stringify(payload)
     })
     if (!response.ok) {
-        let message = "Error al registrar"
+        let message = "Error al registrar usuario"
         try {
             const err = await response.json()
-            message = err?.message ?? message
+            message = err?.message ?? err?.Message ?? message
         } catch (error) {
             console.log(error);
         }

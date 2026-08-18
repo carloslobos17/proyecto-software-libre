@@ -13,6 +13,7 @@ export function useRegisterViewModel() {
     const [confirmPassword, setConfirmPassword] = useState("")
     const [error, setError] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [success, setSuccess] = useState("")
 
     const handleChange = (field: keyof RegisterPayload, value: string) => {
         setForm((prev) => ({
@@ -20,26 +21,28 @@ export function useRegisterViewModel() {
             [field]: value
         }))
     }
-    const validate=() => {
+    const validate = () => {
         if (!form.name || !form.lastname || !form.phone || !form.email || !form.password) {
             return "Completa todos los campos"
         }
 
-        if(form.password.length < 6){
+        if (form.password.length < 6) {
             return "La contraseña debe de tener al menos 6 caracteres"
         }
-        if(form.password !== confirmPassword){
+        if (form.password !== confirmPassword) {
             return "Las contraseñas no coinciden"
         }
         return ""
     }
 
-    const submit = async(e:React.FormEvent<HTMLFormElement>) =>{
+    const submit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setSuccess("")
         setError("")
 
+
         const validationMessage = validate()
-        if(validationMessage){
+        if (validationMessage) {
             setError(validationMessage)
             return
         }
@@ -48,20 +51,23 @@ export function useRegisterViewModel() {
 
         try {
             const response = await registerUser(form)
-            console.log(response);
+            console.log("REGISTER RESPONSE", response);
+            setSuccess("Usuario registrado correctamente")
         } catch (error) {
             console.log(error);
-        }finally{
-            setIsLoading(false) 
+            setError(error instanceof Error ? error.message : "Error a registrarse")
+        } finally {
+            setIsLoading(false)
         }
     }
-    return{
+    return {
         form,
         confirmPassword,
         setConfirmPassword,
         isLoading,
         error,
         handleChange,
-        submit
+        submit,
+        success
     }
 }

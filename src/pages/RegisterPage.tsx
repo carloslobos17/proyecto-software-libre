@@ -1,5 +1,7 @@
+import { useEffect } from "react"
 import type React from "react"
 import { useRegisterViewModel } from "../viewmodels/use-register"
+import { toast } from "sonner"
 
 interface RegisterPageProps {
     onNavigateToLogin: () => void
@@ -15,8 +17,21 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
         isLoading,
         error,
         handleChange,
-        submit
-    } = useRegisterViewModel ()
+        submit,
+        success
+    } = useRegisterViewModel()
+
+    useEffect(() => {
+        if (error) {
+            toast.error(error)
+        }
+    }, [error])
+
+    useEffect(() => {
+        if (success) {
+            toast.success(success)
+        }
+    }, [success])
     return (
         <div className="min-h-screen flex flex-col relative overflow-hidden font-sans">
             <header className="relative w-full border border-slate-100 bg-white/80">
@@ -106,20 +121,17 @@ export const RegisterPage: React.FC<RegisterPageProps> = ({
                                 </label>
                                 <input type="password"
                                     value={confirmPassword}
-                                    onChange={(e) => setConfirmPassword( e.target.value)}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
                                     className="w-full px-4 py-3 mb-2 border border-slate-200 focus:border-indigo-500 rounded-lg placeholder-slate-400"
                                     placeholder="Digite su contraseña de confirmación"
                                 />
                             </div>
                             <div className="mt-4">
                                 <button
-                                type="submit"
+                                    type="submit"
                                     className="w-full py-3 px-4 bg-blue-600 rounded-lg text-white hover:bg-blue-800 hover:shadow-lg transition-all duration-200 active:scale-[0.98] disabled:opacity-50"
                                 >{isLoading ? "Creando cuenta" : "Crear cuenta"}
                                 </button>
-                                {error &&(
-                                    <p className="text-sm text-red-500 font-medium">{error}</p>
-                                )}
                             </div>
                         </form>
                     </div>
