@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { loginUser } from "../service/user-service";
+import { useAuth } from "../context/useAuth";
 
 
 export function useLoginViewModel() {
+    const{
+        login
+    }=useAuth()
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [error, setError] = useState("")
@@ -22,7 +26,7 @@ export function useLoginViewModel() {
 
         try {
             const data = await loginUser({ email, password })
-            console.log("TOKEN", data.token)
+            login(data, true)
         } catch (error) {
             console.log("ERROR", error);
         }
