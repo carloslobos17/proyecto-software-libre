@@ -1,5 +1,7 @@
 import { ArrowLeft, Mail, Phone, UserRound } from "lucide-react"
 import { useAuth } from "../context/useAuth"
+import { PersonalInfo } from "../components/PersonalInfo"
+import { ProfileSidebar } from "../components/profileSidebar"
 
 interface ProfilePageProps {
     onBackToDashboard: () => void
@@ -46,6 +48,10 @@ export const ProfilePage = ({ onBackToDashboard }: ProfilePageProps) => {
                         </button>
                     </div>
                 </section>
+                <div className="grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr]">
+                    <ProfileSidebar/>
+                    <PersonalInfo user={user}/>
+                </div>
             </div>
         </div>
     )
