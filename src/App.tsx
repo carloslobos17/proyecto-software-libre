@@ -1,43 +1,43 @@
-import { useState } from 'react'
 import './App.css'
+import { useAuth } from './context/useAuth'
+import { BrowserRouter, Navigate, Outlet, Route, Routes } from 'react-router-dom'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
-import { useAuth } from './context/useAuth'
+import { MainLayout } from './components/MainLayout'
 import { DashboardPage } from './pages/Dashboard'
-import { ProfilePage } from './pages/ProfilePage'
+import { CategoriesPage } from './pages/CategoriesPage'
 
-type PublicScreen = "login" | "register"
-type PrivateScreen = "dashboard" | "profile"
+const ProtectedRoute = () => {
+  const { isAuthenticated, isHydrated } = useAuth()
+  if (!isHydrated) return null
+  return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />
+}
+
+const PublicRoute = () => {
+  const { isAuthenticated, isHydrated } = useAuth()
+  if (!isHydrated) return null
+  return !isAuthenticated ? <Outlet /> : <Navigate to="/catalog" replace />
+}
 
 function App() {
-  //UTILIZAR NUESTRO CONTEXTO
-  const {
-    isAuthenticated
-  } = useAuth()
-
-  const [publicScreen, setPublicScreen] = useState<PublicScreen>("login")
-  const [privateScreen, setPrivateScreen] = useState<PrivateScreen>("dashboard")
-
-
-  if (!isAuthenticated) {
-    if (publicScreen === "register") {
-      return (
-        <RegisterPage onNavigateToLogin={() => setPublicScreen("login")} />
-      )
-    }
-    return (
-      <LoginPage onNavigateToRegister={() => setPublicScreen("register")} />
-    )
-  }
-  if (privateScreen === "profile") {
-    return (
-      <ProfilePage onBackToDashboard={() => setPrivateScreen("dashboard")} />
-    )
-  }
   return (
-    <DashboardPage onNavigateToProfile={() => setPrivateScreen("profile")} />
-  )
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PublicRoute />}>
+          <Route path='/login' element={<LoginPage onNavigateToRegister={() => { }} />} />
+          <Route path='/register' element={<RegisterPage onNavigateToLogin={() => { }} />} />
+        </Route>
+        <Route element={<ProtectedRoute/>}>
+          <Route element={<MainLayout/>}>
+            <Route path='/' element={<Navigate to="/catalog"/>}/>
+            <Route path='/catalog' element={<DashboardPage/>}/>
+            <Route path='categories/create' element={<CategoriesPage/>}/>
+          </Route>
+        </Route>
+      </Routes>
 
+    </BrowserRouter>
+  )
 }
 
 export default App
