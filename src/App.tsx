@@ -6,6 +6,7 @@ import { RegisterPage } from './pages/RegisterPage'
 import { MainLayout } from './components/MainLayout'
 import { DashboardPage } from './pages/Dashboard'
 import { CategoriesPage } from './pages/CategoriesPage'
+import { ProductCreatePage } from './pages/ProductCreatePage'
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isHydrated } = useAuth()
@@ -32,6 +33,7 @@ function App() {
             <Route path='/' element={<Navigate to="/catalog"/>}/>
             <Route path='/catalog' element={<DashboardPage/>}/>
             <Route path='categories/create' element={<CategoriesPage/>}/>
+            <Route path='products/create' element={<ProductCreatePage/>}/>
           </Route>
         </Route>
       </Routes>

@@ -1,10 +1,10 @@
 import React from "react";
-import { LayoutGrid, Pizza, Salad, Cake, Coffee, FolderPlus } from "lucide-react";
+import { LayoutGrid, Pizza, Salad, Cake, Coffee, FolderPlus, Package, PackagePlus } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
 interface DrawerProps {
     isOpen: boolean
-    onClose: () => void                                                
+    onClose: () => void
 }
 
 const menuItems = [
@@ -12,7 +12,7 @@ const menuItems = [
     { label: "Fast Food", icon: Pizza },
     { label: "Healty", icon: Salad },
     { label: "Desserts", icon: Cake },
-    { label: "Beverages", icon:  Coffee },
+    { label: "Beverages", icon: Coffee },
 
 ]
 
@@ -52,40 +52,52 @@ export const Drawer: React.FC<DrawerProps> = ({
                     <div>
                         <p className="mb-3 text-xs font-bold uppercase text-slate-400">Gestion</p>
                         <NavLink
-                        to="/categories/create"
-                        onClick={onClose}
-                        className={(isActive)=>
-                            `flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${
-                            isActive 
-                            ? "bg-indigo-50 text-indigo-700"
-                            : "text-slate-600 hover:bg-slate-100"
-                        }`
-                        }
+                            to="/categories/create"
+                            onClick={onClose}
+                            className={(isActive) =>
+                                `flex mb-2 w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${isActive
+                                    ? "bg-indigo-50 text-indigo-700"
+                                    : "text-slate-600 hover:bg-slate-100"
+                                }`
+                            }
                         >
-                            <FolderPlus size={18}/>
+                            <FolderPlus size={18} />
                             Crear categoria
+                        </NavLink>
+                        <NavLink
+                            to="/products/create"
+                            onClick={onClose}
+                            className={(isActive) =>
+                                `flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${isActive
+                                    ? "bg-indigo-50 text-indigo-700"
+                                    : "text-slate-600 hover:bg-slate-100"
+                                }`
+                            }
+                        >
+                            <PackagePlus size={18} />
+                            Crear producto
                         </NavLink>
                     </div>
                     <p className="mb-3 text-xs font-bold uppercase text-slate-400">Filters</p>
                     <ul className="space-y-2">
-                        {menuItems.map((item, index) =>{
+                        {menuItems.map((item, index) => {
                             const Icon = item.icon
-                            return(
-                            <li key={item.label}>
-                                <button
-                                    type="button"
-                                    onClick={onClose}
-                                    className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors
+                            return (
+                                <li key={item.label}>
+                                    <button
+                                        type="button"
+                                        onClick={onClose}
+                                        className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-left text-sm transition-colors
                                 ${index === 0
-                                            ? "bg-cyan-100 font-semibold text-700"
-                                            : "text-slate-600 hover:bg-slate-100"
-                                        }
+                                                ? "bg-cyan-100 font-semibold text-700"
+                                                : "text-slate-600 hover:bg-slate-100"
+                                            }
                                 `}
-                                >
-                                    <Icon size={18}/>
-                                    {item.label}
-                                </button>
-                            </li>
+                                    >
+                                        <Icon size={18} />
+                                        {item.label}
+                                    </button>
+                                </li>
                             )
 
                         })}
