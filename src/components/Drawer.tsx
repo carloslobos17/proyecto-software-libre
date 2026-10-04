@@ -54,7 +54,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                         <NavLink
                             to="/categories/create"
                             onClick={onClose}
-                            className={(isActive) =>
+                            className={({isActive}) =>
                                 `flex mb-2 w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${isActive
                                     ? "bg-indigo-50 text-indigo-700"
                                     : "text-slate-600 hover:bg-slate-100"
@@ -67,7 +67,7 @@ export const Drawer: React.FC<DrawerProps> = ({
                         <NavLink
                             to="/products/create"
                             onClick={onClose}
-                            className={(isActive) =>
+                            className={({isActive}) =>
                                 `flex w-full items-center gap-3 rounded-lg px-3 py-2 text-left text-sm font-semibold transition-colors ${isActive
                                     ? "bg-indigo-50 text-indigo-700"
                                     : "text-slate-600 hover:bg-slate-100"
