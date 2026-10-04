@@ -75,6 +75,76 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     />
                     <span className="text-[10px] text-slate-400 block mt-1">Asegurate de incluir advertencias o especificacion de porciones para los repartidores</span>
                 </div>
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+                    <div>
+                        <label className="text-xs font-bold text-slate-700 uppercase mb-2">
+                            Preio regular
+                        </label>
+                        <div className="relative">
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-700">$</span>
+                            <input
+                                type="text"
+                                step="0.01"
+                                min="0"
+                                required
+                                placeholder="0.0"
+                                className="w-full border border-slate-200 py-3 pl-8 pr-4 text-xs text-slate-700 focus:border-indigo-600"
+                            />
+                        </div>
+
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-slate-700 uppercase mb-2">
+                            Precio de oferta
+                        </label>
+                        <div className="relative">
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-700">$</span>
+                            <input
+                                type="text"
+                                step="0.01"
+                                min="0"
+                                required
+                                placeholder="0.0"
+                                className="w-full border border-slate-200 py-3 pl-8 pr-4 text-xs text-slate-700 focus:border-indigo-600"
+                            />
+                        </div>
+
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-slate-700 uppercase mb-2">
+                            stock inicial
+                        </label>
+                        <div className="relative">
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-700">$</span>
+                            <input
+                                type="text"
+                                step="0.01"
+                                min="0"
+                                required
+                                placeholder="0.0"
+                                className="w-full border border-slate-200 py-3 pl-8 pr-4 text-xs text-slate-700 focus:border-indigo-600"
+                            />
+                        </div>
+
+                    </div>
+                    <div>
+                        <label className="text-xs font-bold text-slate-700 uppercase mb-2">
+                            Stock minimo
+                        </label>
+                        <div className="relative">
+                            <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-slate-700">$</span>
+                            <input
+                                type="text"
+                                step="0.01"
+                                min="0"
+                                required
+                                placeholder="0.0"
+                                className="w-full border border-slate-200 py-3 pl-8 pr-4 text-xs text-slate-700 focus:border-indigo-600"
+                            />
+                        </div>
+
+                    </div>
+                </div>
                 <div className="flex items-center justify-end gap-3 border-t border-slate-100 pt-5">
                     <button
                         onClick={onCancel}
