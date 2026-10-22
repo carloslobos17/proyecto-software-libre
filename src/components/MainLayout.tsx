@@ -35,7 +35,7 @@ export const MainLayout: React.FC = () => {
                     <div className="flex items-center gap">
                         <button
                             type="button"
-                            onClick={()=>("/profile")}
+                            onClick={()=>navigate("/profile")}
                             className="flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold hover:bg-slate-100"
                         >
                             <UserRound size={17} />

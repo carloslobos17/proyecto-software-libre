@@ -25,3 +25,9 @@ export interface LoginResponse {
     token: string
     userResponse: UserResponse
 }
+
+export interface UserRequest{
+    name:string
+    lastname:string
+    phone:string
+}
