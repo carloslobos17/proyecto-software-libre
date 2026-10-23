@@ -6,3 +6,14 @@ export interface Product {
     price:number
     image:string
 }
+
+export interface ProductPayload{
+    name:string
+    categoryId:number
+    sku: string
+    description:string
+    regularPrice:number
+    offerPrice:number
+    initialStock:number
+    minStockAlert:number
+}
