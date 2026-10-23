@@ -1,7 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useAuth } from "../context/useAuth"
 import type { ProductPayload } from "../models/product"
 import { createProduct } from "../service/product-service"
+import type { CategoryResponse } from "../models/category"
+import { getAllCategories } from "../service/category-service"
 
 export interface ProductFormState {
     name: string
@@ -31,6 +33,23 @@ export function useProductViewModel() {
     const [error, setError] = useState("")
     const [success, setSuccess] = useState("")
     const [isLoading, setIsLoading] = useState(false)
+    const [isLoadingCategoies, setIsLoadingCategories] = useState(false)
+    const [categories, setCategories] = useState<CategoryResponse[]>([])
+
+    useEffect(() => {
+        async function fetchCategories() {
+            try {
+                setIsLoadingCategories(true)
+                const data = await getAllCategories(token)
+                setCategories(data)
+            } catch (error) {
+                setError(error instanceof Error ? error.message : "Error al cargar categorias")
+            }
+        }
+        fetchCategories()
+    }, [token])
+
+
     const handleChange = (field: keyof ProductFormState, value: string) => {
         setForm((prev) => ({ ...prev, [field]: value }))
     }
@@ -55,7 +74,7 @@ export function useProductViewModel() {
 
         const payload: ProductPayload = {
             name: form.name.trim(),
-            categoryId: 1,
+            categoryId: Number(form.categoryId),
             sku: form.sku.trim(),
             description: form.description.trim(),
             regularPrice: isNaN(regularPrice) ? 0 : regularPrice,
@@ -76,15 +95,17 @@ export function useProductViewModel() {
                 error instanceof Error ? error.message : "No se pudo crear la categoria"
             )
         } finally {
-            setIsLoading(false)
+            setIsLoadingCategories(false)
         }
     }
-    return{
+    return {
         form,
         handleChange,
         submit,
         isLoading,
         error,
-        success
+        success,
+        categories,
+        isLoadingCategoies
     }
 }

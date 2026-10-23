@@ -6,11 +6,6 @@ interface ProductFormProps {
     onSuccess: () => void
 }
 
-const availablesCategories = [
-    "Fast Food",
-    "Healthy"
-]
-
 export const ProductForm: React.FC<ProductFormProps> = ({
     onCancel,
     onSuccess
@@ -21,6 +16,8 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         handleChange,
         submit,
         isLoading,
+        categories,
+        isLoadingCategoies
     } = useProductViewModel()
     return (
         <div className="max-w-4xl rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
@@ -47,14 +44,13 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     </label>
                     <select
                         required
-                        value={[]}
+                        value={form.categoryId}
+                        onChange={(e)=> handleChange("categoryId", e.target.value)}
                         className="w-full rounded-lg border border-slate-200 py-3 px-4 text-xs text-slate-700 focus:border-indigo-600 focus:outline-none"
                     >
-                        {availablesCategories.map((cat) => (
-                            <option key={cat} value={cat}>
-                                {cat}
-                            </option>
-                        ))}
+                        <option value="">
+                            {isLoadingCategoies ? "Cargando categorias": "Selecciona la categoria"}
+                        </option>
                     </select>
                 </div>
                 <div>
