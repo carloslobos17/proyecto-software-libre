@@ -44,6 +44,8 @@ export function useProductViewModel() {
                 setCategories(data)
             } catch (error) {
                 setError(error instanceof Error ? error.message : "Error al cargar categorias")
+            }finally{
+                setIsLoadingCategories(false)
             }
         }
         fetchCategories()
@@ -95,7 +97,7 @@ export function useProductViewModel() {
                 error instanceof Error ? error.message : "No se pudo crear la categoria"
             )
         } finally {
-            setIsLoadingCategories(false)
+            setIsLoading(false)
         }
     }
     return {

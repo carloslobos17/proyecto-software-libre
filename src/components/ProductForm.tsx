@@ -45,12 +45,17 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                     <select
                         required
                         value={form.categoryId}
-                        onChange={(e)=> handleChange("categoryId", e.target.value)}
+                        onChange={(e) => handleChange("categoryId", e.target.value)}
                         className="w-full rounded-lg border border-slate-200 py-3 px-4 text-xs text-slate-700 focus:border-indigo-600 focus:outline-none"
                     >
                         <option value="">
-                            {isLoadingCategoies ? "Cargando categorias": "Selecciona la categoria"}
+                            {isLoadingCategoies ? "Cargando categorias" : "Selecciona la categoria"}
                         </option>
+                        {categories.map((cat) => (
+                            <option key={cat.id} value={cat.id}>
+                                {cat.name}
+                            </option>
+                        ))}
                     </select>
                 </div>
                 <div>
@@ -149,7 +154,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
                                 min="0"
                                 required
                                 value={form.minStockAlert}
-                                                        onChange={(e)=> handleChange("minStockAlert", e.target.value)}
+                                onChange={(e) => handleChange("minStockAlert", e.target.value)}
                                 placeholder="0.0"
                                 className="w-full border border-slate-200 py-3 pl-8 pr-4 text-xs text-slate-700 focus:border-indigo-600"
                             />
