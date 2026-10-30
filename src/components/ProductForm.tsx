@@ -18,7 +18,7 @@ export const ProductForm: React.FC<ProductFormProps> = ({
         isLoading,
         categories,
         isLoadingCategoies
-    } = useProductViewModel()
+    } = useProductViewModel(null)
     return (
         <div className="max-w-4xl rounded-2xl border border-slate-200 bg-white shadow-sm overflow-hidden">
             <div className="border-b border-slate-100 p-6">
