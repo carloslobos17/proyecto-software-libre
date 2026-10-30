@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "../context/useAuth";
 import type { CategoryPayload, CategoryResponse } from '../models/category';
-import { createCategory, getAllCategories } from "../service/category-service";
+import { createCategory, getAllCategories, getCategories } from "../service/category-service";
 
 export function useCategoryViewModel(onSuccessCallback?: () => void) {
     const { token } = useAuth()
@@ -51,33 +51,61 @@ export function useCategoryViewModel(onSuccessCallback?: () => void) {
             setIsLoading(false)
         }
     }
-    const fetchCategories = useCallback(async () => {
-        if (!token) return
-        try {
-            setIsLoading(true)
-            setError("")
-            const data = await getAllCategories(token)
-            setCategories(data)
+    // const fetchCategories = useCallback(async () => {
+    //     if (!token) return
+    //     try {
+    //         setIsLoading(true)
+    //         setError("")
+    //         const data = await getAllCategories(token)
+    //         setCategories(data)
 
-        } catch (error) {
-            setError(
-                error instanceof Error ? error.message : "Error al cargar la data"
-            )
-        } finally {
-            setIsLoading(false)
-        }
-    }, [token])
-    useEffect(() => {
-        fetchCategories()
-    }, [fetchCategories])
+    //     } catch (error) {
+    //         setError(
+    //             error instanceof Error ? error.message : "Error al cargar la data"
+    //         )
+    //     } finally {
+    //         setIsLoading(false)
+    //     }
+    // }, [token])
+    // useEffect(() => {
+    //     fetchCategories()
+    // }, [fetchCategories])
     return {
         form,
         handleChange,
         submit,
         isLoading,
         error,
-        success,
+        success
+    }
+}
+export function useCategoriesList() {
+    const { token } = useAuth()
+    const [categories, setCategories] = useState<CategoryResponse[]>([])
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string>("")
+
+    const fetchCategories = useCallback(async () => {
+        try {
+            setIsLoading(true)
+            setError("")
+            const data = await getCategories(token)
+            setCategories(data)
+        } catch (err) {
+            setError(err instanceof Error ? err.message : "Error al obtener las categorías")
+        } finally {
+            setIsLoading(false)
+        }
+    }, [token])
+
+    useEffect(() => {
+        fetchCategories()
+    }, [fetchCategories])
+
+    return {
         categories,
-        refreshCategories: fetchCategories
+        isLoading,
+        error,
+        refetch: fetchCategories
     }
 }

@@ -1,9 +1,9 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useAuth } from "../context/useAuth"
-import type { ProductPayload } from "../models/product"
+import type { ProductPayload, ProductResponse } from "../models/product"
 import { createProduct } from "../service/product-service"
 import type { CategoryResponse } from "../models/category"
-import { getAllCategories } from "../service/category-service"
+import { getAllCategories, getProductsByCategoryId } from "../service/category-service"
 
 export interface ProductFormState {
     name: string
@@ -27,7 +27,7 @@ const initialFormState: ProductFormState = {
     minStockAlert: ""
 }
 
-export function useProductViewModel() {
+export function useProductViewModel(categoryId: number | string | null) {
     const { token } = useAuth()
     const [form, setForm] = useState(initialFormState)
     const [error, setError] = useState("")
@@ -35,7 +35,27 @@ export function useProductViewModel() {
     const [isLoading, setIsLoading] = useState(false)
     const [isLoadingCategoies, setIsLoadingCategories] = useState(false)
     const [categories, setCategories] = useState<CategoryResponse[]>([])
+    const [products, setProducts] = useState<ProductResponse[]>([])
 
+    const fetchProducts = useCallback(async () => {
+        if (!categoryId) {
+            return
+        }
+
+        try {
+            setIsLoading(true)
+            setError("")
+            const data = await getProductsByCategoryId(categoryId, token)
+            setProducts(data)
+        } catch (error) {
+            setError(error instanceof Error ? error.message : "Error al cargar los productos")
+        } finally {
+            setIsLoading(false)
+        }
+    }, [categoryId, token])
+    useEffect(() => {
+        fetchProducts()
+    }, [fetchProducts])
     useEffect(() => {
         async function fetchCategories() {
             try {
@@ -108,6 +128,8 @@ export function useProductViewModel() {
         error,
         success,
         categories,
-        isLoadingCategoies
+        isLoadingCategoies,
+        products,
+        refecth:fetchProducts
     }
 }

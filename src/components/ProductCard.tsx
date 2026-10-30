@@ -1,8 +1,8 @@
 import { Heart, ShoppingCart } from "lucide-react";
-import type { Product } from "../models/product";
+import type { Product, ProductResponse } from "../models/product";
 
 interface ProductCardProps{
-    product:Product
+    product:ProductResponse
 }
 
 export const ProductCard=({product}:ProductCardProps)=>{
@@ -10,7 +10,7 @@ export const ProductCard=({product}:ProductCardProps)=>{
         <article className="overflow-hidden rounded-lg border border-lg border-slate-200 bg-white shadow-sm">
             <div className="relative">
                 <img 
-                src={product.image}
+                src={product.imageUrl}
                 alt={product.name}
                 className="h-32 w-full object-cover"
                 />
@@ -18,7 +18,7 @@ export const ProductCard=({product}:ProductCardProps)=>{
             <div className="p-3">
                 <div className="flex items-start justify-between gap-2">
                     <h3 className="text-sm font-bold text-slate-800">{product.name}</h3>
-                    <span className="whitespace-nowrap text-xs font-bold">${product.price.toFixed(2)}</span>
+                    <span className="whitespace-nowrap text-xs font-bold">${product.regularPrice.toFixed(2)}</span>
                 </div>
                 <p className="mt-2 h-10 overflow-hidden text-xs">{product.description}</p>
                 <div className="mt-4 flex gap-2">
