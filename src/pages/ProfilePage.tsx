@@ -19,7 +19,7 @@ export const ProfilePage = ({ onBackToDashboard }: ProfilePageProps) => {
         success
     } = useProfileViewModel()
 
-    const fullName = `${user?.name ?? ""} ${user?.lastName}`.trim()
+    const fullName = `${user?.name ?? ""} ${user?.lastname}`.trim()
     return (
         <div className="min-h-screen bg-slate-50 p-4 md:p-8">
             <div className="mx-auto max-w-6xl">
@@ -60,6 +60,7 @@ export const ProfilePage = ({ onBackToDashboard }: ProfilePageProps) => {
                     </div>
                 </section>
                 <div className="grid grid-cols-1 gap-6 lg:grid-cols-[260px_1fr]">
+                    <ProfileSidebar/>
                     <PersonalInfo
                         user={user}
                         name={form.name}

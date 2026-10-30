@@ -11,10 +11,11 @@ export interface Role {
 }
 
 export interface UserResponse {
-    id: string
+    id: number
     email: string
     name: string
     lastName: string
+    lastname:string
     image: string
     notification_token: string | null
     phone: string
