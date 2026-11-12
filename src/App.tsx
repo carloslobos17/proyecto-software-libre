@@ -8,6 +8,7 @@ import { DashboardPage } from './pages/Dashboard'
 import { CategoriesPage } from './pages/CategoriesPage'
 import { ProductCreatePage } from './pages/ProductCreatePage'
 import { ProfilePage } from './pages/ProfilePage'
+import { ProductDetail } from './pages/ProductDetail'
 
 const ProtectedRoute = () => {
   const { isAuthenticated, isHydrated } = useAuth()
@@ -33,6 +34,7 @@ function App() {
           <Route element={<MainLayout/>}>
             <Route path='/' element={<Navigate to="/catalog"/>}/>
             <Route path='/catalog' element={<DashboardPage/>}/>
+            <Route path="/product/:id" element={<ProductDetail />} />
             <Route path='/profile' element={<ProfilePage onBackToDashboard={function (): void {
               throw new Error('Function not implemented.')
             } }/>}/>

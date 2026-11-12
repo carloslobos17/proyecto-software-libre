@@ -1,15 +1,18 @@
 import type React from "react";
 import { useAuth } from "../context/useAuth";
 import { ProductCard } from "../components/ProductCard";
-import { useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useProductViewModel } from "../viewmodels/use-product";
 
 export const DashboardPage: React.FC = () => {
     const { user } = useAuth();
     const [searchParams] = useSearchParams();
     const categoryId = searchParams.get("categoryId")
-
-    const {products, isLoading, error}= useProductViewModel(categoryId)
+    const navigate = useNavigate()
+    const handleGoToDetails = (productId: string | number) => {
+        navigate(`/product/${productId}`);
+    };
+    const { products, isLoading, error } = useProductViewModel(categoryId)
     return (
         <div className="mb-8">
             <h2 className="text-3xl font-black text-slate-900">Comida lista para entregar a la puerta de tu casa</h2>
@@ -34,9 +37,18 @@ export const DashboardPage: React.FC = () => {
                     <p>No hay productos</p>
                 </div>
             )}
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
-                {products.map((product)=>(
-                    <ProductCard key={product.id} product={product}/>
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4 cursor-pointer"
+                onClick={() => navigate("/")}
+            >
+                {products.map((product) => (
+
+<Link 
+                        key={product.id} 
+                        to={`/product/${product.id}`}
+                        className="block cursor-pointer transition-transform hover:scale-[1.02]"
+                    >
+                        <ProductCard product={product} />
+                    </Link>
                 ))}
             </div>
         </div>
