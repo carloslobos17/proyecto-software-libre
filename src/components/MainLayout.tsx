@@ -2,7 +2,7 @@ import type React from "react";
 import { useAuth } from "../context/useAuth";
 import { Outlet, useNavigate } from "react-router-dom"
 import { useState } from "react";
-import { Menu, UserRound } from "lucide-react";
+import { Menu, ShoppingCart, UserRound } from "lucide-react";
 import { products } from "../data/products";
 import { CategoryForm } from "./CategoryForm";
 import { Drawer } from "./Drawer";
@@ -35,7 +35,18 @@ export const MainLayout: React.FC = () => {
                     <div className="flex items-center gap">
                         <button
                             type="button"
-                            onClick={()=>navigate("/profile")}
+                            onClick={() => navigate("/cart")}
+                            className="relative rounded-lg p-2 text-indigo-600 transition-colors hover:bg-indigo-50"
+                            aria-label="Ver carrito de compras"
+                        >
+                            <ShoppingCart size={22} />
+                            <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-slate-900 text-[10px] font-bold text-white">
+                                3
+                            </span>
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => navigate("/profile")}
                             className="flex items-center gap-2 rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold hover:bg-slate-100"
                         >
                             <UserRound size={17} />
@@ -54,7 +65,7 @@ export const MainLayout: React.FC = () => {
 
                 </header>
                 <div className="flex-1 p-6">
-                    <Outlet/>
+                    <Outlet />
                 </div>
             </main>
         </div>
